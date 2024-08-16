@@ -1,23 +1,27 @@
-import java.util.Scanner;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = Integer.parseInt(sc.nextLine());
-        int[] arr = new int[26];
-        for (int i = 0; i < n; i++) {
-            String tmp = sc.nextLine();
-            arr[tmp.charAt(0)-97]++;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        int[] alpha = new int[26];
+        int num = Integer.parseInt(br.readLine());
+        while (num-- > 0){
+            String s = br.readLine();
+            char c = s.charAt(0);
+            alpha[c - 'a']++;
         }
-
-        boolean flag = false;
         for (int i = 0; i < 26; i++) {
-            if(arr[i]>=5){
-                System.out.print((char)(i+97));
-                flag = true;
-            }
+            if(alpha[i] >= 5) sb.append((char)(i+'a'));
         }
 
-        if(flag == false) System.out.println("PREDAJA");
+        if (sb.length() != 0) {
+            System.out.println(sb);
+        }
+        else {
+            System.out.println("PREDAJA");
+        }
     }
 }
