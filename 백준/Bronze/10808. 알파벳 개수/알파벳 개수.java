@@ -1,19 +1,17 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-public class Main {
+import java.io.*;
+public class Main {//10808
+    static int[] alpha = new int[26];
     public static void main(String[] args) throws IOException {
-        int[] answer = new int[26];
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String s = br.readLine();
 
         for (char c : s.toCharArray()) {
-            answer[c-'a']++;
-        }
+           int index = c - 'a';
+           alpha[index]++;
+        }//배열 값 채우기
 
-        for (int i : answer) {
-            System.out.print(i+" ");
+        for (int i : alpha) {
+            System.out.print(i + " ");
         }
     }
 }
