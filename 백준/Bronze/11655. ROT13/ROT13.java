@@ -1,22 +1,28 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-public class Main{
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String s = sc.nextLine();
-        String answer = "";
-
-        for (char c : s.toCharArray()) {
-            if(c>='A' && c <= 'Z')  {
-                c = (char) (c + 13);
-                if(c > 'Z') c = (char)(c - 26);
-
+public class Main {//11655
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        String s = br.readLine();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= 65 && c <= 90) {
+                int tmp = (char) (c + 13);
+                if(tmp > 90) tmp -= 26;
+                c = (char)tmp;
             }
-            else if(c >= 'a' && c<= 'z'){
-                c = (char) (c + 13);
-                if(c > 'z') c = (char)(c - 26);
+            if (c >= 97 && c <= 122) {
+                int tmp = (char) (c + 13);
+                if(tmp > 122) tmp -= 26;
+                c = (char)tmp;
             }
-            System.out.print(c);
+
+            sb.append(c);
         }
+        System.out.println(sb);
     }
 }
