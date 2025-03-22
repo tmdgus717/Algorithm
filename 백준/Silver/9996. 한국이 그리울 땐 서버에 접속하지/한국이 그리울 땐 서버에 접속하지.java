@@ -1,32 +1,47 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+//package chapter01;
 
-public class Main {
+import java.io.*;
+import java.util.*;
+public class Main{
 
-    public static void main(String[] args) throws IOException {
+    private static String DA = "DA";
+    private static String NE = "NE";
+
+    public static void main(String[] args) throws Exception {
+        List<String> answers = new ArrayList<>();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        //횟수 n 입력받기
         int n = Integer.parseInt(br.readLine());
-        String s = br.readLine();
-        String ls = s.substring(0,s.indexOf("*"));
-        String rs = s.substring(s.indexOf("*")+1);
-        String yes = "DA";
-        String no = "NE";
+
+        //패턴
+        String tmp = br.readLine();
+        int asteriskIndex = tmp.indexOf('*');
+
+        String front = tmp.substring(0, asteriskIndex);
+        String back = tmp.substring(asteriskIndex + 1);
+
         for (int i = 0; i < n; i++) {
 
-            String tmp = br.readLine();
-            boolean flag = true;
-
-            if (ls.length() + rs.length() > tmp.length()) {
-                flag = false;
+            String fileName = br.readLine();
+            if (front.length() + back.length() > fileName.length()) {
+                answers.add(NE);
+                continue;
             }
 
-            if(!tmp.startsWith(ls) || !tmp.endsWith(rs) ){
-                flag = false;
+            int fileNameLength = fileName.length();
+            String fileFront = fileName.substring(0, front.length());
+            String fileBack = fileName.substring(fileNameLength - back.length(), fileNameLength);
+            //앞부분 비교
+            if (front.equals(fileFront) && back.equals(fileBack)) {
+                answers.add(DA);
+            }else {
+                answers.add(NE);
             }
-            //print
-            if(flag) System.out.println(yes);
-            else System.out.println(no);
         }//for
+
+        for (String answer : answers) {
+            System.out.println(answer);
+        }
     }//main
-}//Main
+}
