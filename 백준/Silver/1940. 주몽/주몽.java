@@ -1,42 +1,35 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
-
+import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt(); //15000 : 15000! 이건 너무 값이 큰데...
-        int m = sc.nextInt(); //10000000 -> 차라리 이걸가짖고 작업하는게 좋을 것 같은데
-        List<Integer> items = new ArrayList<>(); //100000
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
-            items.add(sc.nextInt());
+            arr[i] = sc.nextInt();
         }
 
-        if (m > 200000) {
-            System.out.println(0);
-            return;
-        }
+        Arrays.sort(arr);
 
-        Collections.sort(items); //인덱스로 삭제해야하는데 어떻게 해야할까..
         int count = 0;
-        int flag = n - 1;
-        //로직
-        for (int i = 0; i < n; i++) {
-            int first = items.get(i);
-            for (int j = flag; j > i; j--) {
-                if (first + items.get(j) == m) {
-                    count++;
-                    flag = j -1;
-                }
+        int front = 0;
+        int rear = n - 1;
+        while (front < rear) {
+            if (arr[front] + arr[rear] == m){
+                count++;
+                front++;
+                rear--;
             }
-            if (i == flag) {
-                break;
+            else if (arr[front] + arr[rear] < m) {
+                front++;
+            }
+            else if (arr[front] + arr[rear] > m) {
+                rear--;
             }
         }
 
         System.out.println(count);
+    }//main
 
-    }
 }
