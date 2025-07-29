@@ -1,56 +1,40 @@
 import java.util.*;
-import java.io.*;
+public class Main {
 
-public class Main{
+    public static int[][] arr;
+    public static StringBuilder sb = new StringBuilder();
 
-    static char[][] arr;
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine()); // n은 언제나 2의 제곱수 2,4,8,16,32,64
-        arr = new char[n][n];
-
-        //입력받기
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = Integer.parseInt(sc.nextLine());
+        arr = new int[n][n];
         for (int i = 0; i < n; i++) {
-            String s = br.readLine();
+            String s = sc.nextLine();
             for (int j = 0; j < n; j++) {
-                arr[i][j] = s.charAt(j);
+                arr[i][j] = s.charAt(j) - '0';
             }
         }
 
-        quadTree(0,0,n);
+        go(0, 0, n);
+        System.out.println(sb);
+    }
 
-    }//main
-
-    private static void quadTree(int y,int x,int n) {
-
-        char tmp = arr[y][x];
-        if (n == 1) {
-            System.out.print(tmp); //재귀함수 종료조건
-            return;
-        }
-
-        boolean flag = true;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (tmp != arr[i+y][j+x]) {
-                    flag = false;
-                    break;
+    public static void go(int y,int x, int n) {
+        int flag = arr[y][x];
+        for (int i = y; i < y + n; i++) {
+            for (int j = x; j < x + n; j++) {
+                if (flag != arr[i][j]) {
+                    sb.append("(");
+                    go(y, x, n / 2);
+                    go(y, x + n / 2, n / 2);
+                    go(y + n / 2, x, n / 2);
+                    go(y + n / 2, x + n / 2, n / 2);
+                    sb.append(")");
+                    return;
                 }
             }
-            if (!flag) break;
         }
 
-        if (flag) {
-            System.out.print(tmp);
-        }
-        else {
-            System.out.print('(');
-            quadTree(y, x, n / 2);
-            quadTree(y, x + n / 2, n / 2);
-            quadTree(y + n / 2, x, n/2);
-            quadTree(y + n / 2, x + n / 2, n / 2);
-            System.out.print(')');
-        }
-
+        sb.append(flag);
     }
 }
